@@ -52,13 +52,13 @@ public class StarshipSprite extends Sprite{
 
     public void move(){
         // 벽에 부딪히면 못 가게 하기
-        if((dx < 0) && (x < 120)) return;
+        if((dx < 0) && (x < 0)) return;
         // dx 속도가 0 보다 작을 경우 (왼쪽으로 움직일 경우) && x 좌표가 120 보다 작을 경우(왼쪽 벽에 붙어있을 경우) move() 메소드를 종료한다
-        if((dx > 0) && (x > game.screenW - 120)) return;
+        if((dx > 0) && (x > game.screenW - 130)) return;
         // dx 속도가 0 보다 클 경우 (오른쪽으로 움직일 경우) && x 좌표가 스크린 오른쪽 끝 - 120 보다 클 경우(오른쪽 벽에 붙어있을 경우) move() 메소드를 종료한다
         if((dy < 0) && (y < 120)) return;
         // dy 속도가 0 보다 작을 경우 (위쪽으로 움직일 경우) && y 좌표가 120 보다 작을 경우(위쪽 벽에 붙어있을 경우) move() 메소드를 종료한다
-        if((dy > 0) && (y > game.screenH - 120)) return;
+        if((dy > 0) && (y > game.screenH - 180)) return;
         // dy 속도가 0 보다 클 경우 (아래쪽으로 움직일 경우) && x 좌표가 스크린 아레쪽 끝 - 120 보다 클 경우(아래쪽 벽에 붙어있을 경우) move() 메소드를 종료한다
         super.move();
     }
@@ -123,7 +123,7 @@ public class StarshipSprite extends Sprite{
                 MainActivity.bulletCount.invalidate(); // 화면 새로고침
                 isReloading = false; // 다시 false 로 변경
             }
-        }, 2000); // 재장전 시간 2초
+        }, 2000); // 2초후에 실행
     }
 
     // 필사기

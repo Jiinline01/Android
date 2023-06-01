@@ -50,8 +50,9 @@ public class PauseDialog extends Dialog {
             public void onClick(View view) {
                 dismiss();
             } // 현재 Dialog를 종료
-        }); // cancel 과의 차이 : dismiss를 사용해야 RadioGroup 에서 체크한 것이 적용되서 Dialog를 종료함
-
+        });
+        // dismiss 와 cancel 의 차이
+        // dismiss()는 다이얼로그를 어떤 상황에서든 강제로 닫을 수 있으며, cancel()은 다이얼로그를 주로 외부의 클릭 이벤트나 뒤로 가기 버튼으로 취소하는 경우에 사용된다(다이얼로그 내부의 버튼 클릭은 취소로 처리되지 않는다)
         findViewById(R.id.dialogOkBtn).setOnClickListener(new View.OnClickListener() { // dialogOkBtn 이 클릭되면
             @Override
             public void onClick(View view) {

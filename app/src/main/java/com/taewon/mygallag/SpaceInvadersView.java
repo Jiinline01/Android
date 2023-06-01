@@ -23,7 +23,7 @@ public class SpaceInvadersView extends SurfaceView implements Runnable, SurfaceH
     // SurfaceView 는 스레드를 이용해 강제로 화면에 그려주므로 View보다 빠르다. 애니메이션, 영상 처리에 이용
     // SurfaceHolder.Callback Surface 의 변화 감지를 위해 필요. 지금처럼 SurfaceView 와 거의 같이 사용한다.
 
-    private static int MAX_ENEMY_COUNT = 10; // 최대 적 수 설정
+    private static int MAX_ENEMY_COUNT = 30; // 최대 적 수 설정 ( 원래값 - 10 )
     private Context context;
     private int characterId;
     private SurfaceHolder ourHolder; // 화면에 그리는데 View 보다 빠르게 그려준다
@@ -172,9 +172,11 @@ public class SpaceInvadersView extends SurfaceView implements Runnable, SurfaceH
         if(ourHolder.getSurface().isValid()){ // 캔버스가 유효할 경우 if 문 실행
             canvas = ourHolder.lockCanvas(); //ourHolder.lockCanvas() 로 캔버스를 lock 상태로 가져옴
             canvas.drawColor(Color.BLACK); // 가져온 캔버스를 통해 배경을 검은색으로 채움
+            // 배경이 그냥 BLACK 이라 밑에 코드 굳이 필요 X
             mapBitmapY++; // mapBitmapY 를 증가시켜 배경 이미지를 아래로 이동시킴
             if(mapBitmapY < 0) mapBitmapY = 0; // mapBitmapY가 음수가 되어 화면 밖으로 벗어나지 못하도록 함
             paint.setColor(Color.BLUE); // 그리기 작업에 사용할 색상 설정
+            // 여기까지 필요 X
             for(int i = 0; i < sprites.size(); i++){ // sprites ArrayList 에 들어있는 sprite의 개수만큼 실행
                 Sprite sprite = (Sprite) sprites.get(i); // sprites 내의 각 스프라이트를 가져와서
                 sprite.draw(canvas, paint); // sprite.draw(canvas, paint) 를 호출하여 스프라이트를 그림
@@ -182,7 +184,7 @@ public class SpaceInvadersView extends SurfaceView implements Runnable, SurfaceH
             ourHolder.unlockCanvasAndPost(canvas); // 캔버스를 해제하고 그려진 화면을 표시
         }
     }
-
+    // 인터페이스
     @Override
     public void surfaceCreated(@NonNull SurfaceHolder surfaceHolder) {
         startGame();

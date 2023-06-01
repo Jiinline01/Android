@@ -33,10 +33,13 @@ public class AlienSprite extends Sprite{
         if(randomDy <= 0) dy = 1; // randomDy 가 0 보다 작거나 같을 경우 1을 dy 에 담음
         dx = randomDx; // dx = 0 ~ 4
         dy = randomDy; // dy = 1 ~ 4
-        fireHandler = new Handler(Looper.getMainLooper());
-        fireHandler.postDelayed(
-                // delay를 줘서 일정 시간 후에 동작하도록 함
-                new Runnable() {
+        fireHandler = new Handler(Looper.getMainLooper()); // fireHandler 변수를 생성하고, Main Looper에 바인딩 된 핸들러를 할당합니다(Main Thread 의 MessageQueue 에 바인딩)
+        // 메인 스레드의 Main Looper와 연결된 Handler 객체를 생성하는 것을 의미합니다.
+        // 이를 통해 나중에 생성된 Runnable 객체를 Main Looper의 MessageQueue에 전달하고, UI 업데이트나 다른 메인 스레드에서 실행되어야 하는 작업을 예약할 수 있습니다.
+        // MessageQueue 는 Looper 에 의해 보내지는 메세지들의 리스트를 모아놓고 있는 낮은 레벨의 클래스이다.
+        // 메세지들은 직접적으로 메세지큐에 추가되는 것이 아닌, Looper와 관련된 Handler 객체를 통해 추가된다.
+        fireHandler.postDelayed( // delay 사용하여 일정 시간 후에 실행될 작업을 예약
+                new Runnable() { // 예약된 작업은 Runnable 객체로 정의
                     @Override
                     public void run() {
                         Log.d("run", "동작");
@@ -45,22 +48,22 @@ public class AlienSprite extends Sprite{
                         // 0~99 중 랜덤 숫자 + 1 (1 ~ 100) 이 30보다 작거나 같을 경우 (30%의 확률)로 isFire 가 true 가 됨
                         if(isFire && !isDestroyed){ // isFire 가 true, isDestroy 가 false 인 경우 if 문 실행
                             fire(); // 총알을 발사
-                            fireHandler.postDelayed(this, 1000); // 1 초마다 다시 반복
+                            fireHandler.postDelayed(this, 1000); // 1 초마다 동일한 작업을 다시 반복
                         }
                     }
                 }, 1000);
+        // 위 코드는 1초마다 30%의 확률로 fire() 메서드를 호출하여 총알을 발사하고, 반복적으로 실행됩니다.
     }
     @Override
     public void move() {
         super.move();
-        if ((dx < 0) && (x < 10) || ((dx > 0) && (x > 800))) { // 속도가 벽을 향하는 상태로 벽과 부딪힐 경우 벽과 반대 방향으로 이동하게 하는 if 문
+        if ((dx < 0) && (x < 0) || ((dx > 0) && (x > 950))) { // 속도가 벽을 향하는 상태로 벽과 부딪힐 경우 벽과 반대 방향으로 이동하게 하는 if 문
             dx = -dx;
             if (y > game.screenH) { // y축이 game.screenH 보다 커질 경우 ( 화면 아래쪽으로 나갈 경우) 실행
                 game.removeSprite(this); // 이 스프라이트를 제거함
             }
         }
     }
-
 
     @Override
     public void handleCollision(Sprite Other) { // Other 파라미터를 통해 다른 Sprite를 받음

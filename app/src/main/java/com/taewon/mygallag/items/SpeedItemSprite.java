@@ -33,19 +33,19 @@ public class SpeedItemSprite extends Sprite {
     @Override
     public void move() { // 아이템이 가장자리에 부딪히면 아이템 이동 방향을 바꿈
         if((dx < 0) && (x < 120)){
-            dx *= -1;
+            dx *= -1; // dx(음수) * -1 = 양수이므로 벽에서 튕겨지는 원리
             return;
         }
         if((dx > 0) && (x > game.screenW - 120)){
-            dx *= -1;
+            dx *= -1; // dx(음수) * -1 = 양수이므로 벽에서 튕겨지는 원리
             return;
         }
         if((dy < 0) && (y < 120)){
-            dy *= -1;
+            dy *= -1; // dy(음수) * -1 = 양수이므로 벽에서 튕겨지는 원리
             return;
         }
         if((dy > 0) && (y > game.screenH - 120)){
-            dy *= -1;
+            dy *= -1; // dy(음수) * -1 = 양수이므로 벽에서 튕겨지는 원리
             return;
         }
         super.move();

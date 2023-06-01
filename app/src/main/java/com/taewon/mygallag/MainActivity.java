@@ -18,6 +18,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.taewon.mygallag.sprites.Sprite;
+
 import java.util.ArrayList;
 
 import io.github.controlwear.virtual.joystick.android.JoystickView;
@@ -52,11 +54,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         userIntent = getIntent(); // startActivity 에서 보낸 characterId를 userIntent에 입력
-        bgMusincIndex = 0; // bgMusincIndex 를 0으로 초기화
+        bgMusicIndex = 0; // bgMusincIndex 를 0으로 초기화
         bgMusicList = new ArrayList<Integer>(); // 배경 음악 넣을 arrayList 생성
-        bgMusicList.add(R.raw.main_game_bgm1);
-        bgMusicList.add(R.raw.main_game_bgm2);
-        bgMusicList.add(R.raw.main_game_bgm3); // bgMusicList에 배경 음악 입력
+        bgMusicList.add(R.raw.main_game_bgm1); // 0
+        bgMusicList.add(R.raw.main_game_bgm2); // 1
+        bgMusicList.add(R.raw.main_game_bgm3); // 2  bgMusicList에 배경 음악 입력
 
 
         effectSound = new SoundPool(5, AudioManager.USE_DEFAULT_STREAM_TYPE, 0);
@@ -118,12 +120,20 @@ public class MainActivity extends AppCompatActivity {
         effectSoundList.add(PLAYER_GET_ITEM, effectSound.load(MainActivity.this, R.raw.player_get_item_sound, 1));
         // effectSoundList 라는 ArrayList에 효과음을 로드
         // priority : 1 -> 재생 우선 순위를 나타냄
-        bgMusic.start(); // 음악이 바뀌면서 재생
+        // bgMusic.start(); // 필요 없는거 같음
     }
 
     private void changeBgMusic(){ // 음악 파일 변경
         bgMusic = MediaPlayer.create(this, bgMusicList.get(bgMusicIndex)); // bgMusicList 에서 bgMusicIndex 에 입력된 값 만큼의 순서에 있는 곡을 가져옴
         bgMusic.start(); // 음악 파일 재생
+        // 130~136번째줄 bgm 버그 수정 코드
+        bgMusic.setOnCompletionListener(new MediaPlayer.OnCompletionListener() { // 음악이 끝나면
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                bgMusic.release();
+                changeBgMusic(); // changeBgMusic()을 호출해서 음악 변경
+            }
+        });
         bgMusicIndex++; // 음악 바꾸기 위해 bgMusicIndex 증가
         bgMusicIndex = bgMusicIndex % bgMusicList.size(); // 음악 개수 만큼만 바뀌게 하기 위해
     }

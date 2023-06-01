@@ -25,7 +25,7 @@ public class SpecialshotSprite extends Sprite{
 
     public void move(){
         super.move();
-        this.x = game.getPlayer().getX() - getWidth() + 240;
+        this.x = game.getPlayer().getX() - getWidth() + 220;
         // SpecialshotSprite의 x = 플레이어의 x 좌표 - 스프라이트 가로 길이 + 240
         this.y = game.getPlayer().getY() - getHeight();
         // SpecialshotSprite의 y = 플레이어의 y 좌표 - 스프라이트 세로 길이

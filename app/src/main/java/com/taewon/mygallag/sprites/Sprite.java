@@ -19,16 +19,17 @@ public class Sprite {
         this.x = x;
         this.y = y;
         bitmap = BitmapFactory.decodeResource(context.getResources(), resourceId);
+        // context 의 Resource 에서 resourceId 에 해당하는 이미지를 bitmap 으로 디코딩하여 bitmap 변수에 저장하는 코드입니다.
         width = bitmap.getWidth();
         height = bitmap.getHeight();
         rect = new RectF();
     }
     public int getWidth(){
-        return width;
-    } // 스프라이트의 너비 반환
+        return width; // 스프라이트의 너비 반환
+    }
     public int getHeight(){
-        return height;
-    } // 스프라이트의 높이 반환
+        return height; // 스프라이트의 높이 반환
+    }
     public void draw(Canvas canvas, Paint paint){canvas.drawBitmap(bitmap, x, y, paint);}
     // 스프라이트를 주어진 Canvas 에 그림
     public void move(){ // 스프라이트를 현재 이동 속도에 따라 이동
